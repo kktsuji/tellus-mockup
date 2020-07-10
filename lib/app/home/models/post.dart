@@ -33,6 +33,7 @@ class Post {
     if (data == null) {
       return null;
     }
+    final String postId = data['postId'];
     final String title = data['title'];
     final String speaker = data['speaker'];
     final String description = data['description'];
@@ -40,6 +41,7 @@ class Post {
     final int img = data['img'];
     final int fee = data['fee'];
     return Post(
+      postId: postId,
       title: title,
       speaker: speaker,
       description: description,

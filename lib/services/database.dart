@@ -18,6 +18,7 @@ abstract class Database {
   Stream<List<Entry>> entriesStream({Job job});
 
   Future<void> setPost(Post post);
+  Future<void> deletePost(Post post);
   Stream<Post> postStream({@required String postId});
   Stream<List<Post>> postsStream();
 }
@@ -87,6 +88,10 @@ class FirestoreDatabase implements Database {
       path: APIPath.post(uid, post.postId),
       data: post.toMap(),
   );
+
+  @override
+  Future<void> deletePost(Post post) async =>
+      await _service.deleteData(path: APIPath.post(uid, post.postId));
 
   @override
   Stream<Post> postStream({@required String postId}) => _service.documentStream(

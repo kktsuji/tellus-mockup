@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tellus_mockup/app/home/jobs/list_items_builder.dart';
 import 'package:tellus_mockup/app/home/models/post.dart';
 import 'package:tellus_mockup/app/home/posts/post_list_card.dart';
+import 'package:tellus_mockup/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:tellus_mockup/services/database.dart';
 
 import 'edit_post_page.dart';
@@ -11,7 +13,15 @@ import 'edit_post_page.dart';
 class PostsPage extends StatelessWidget {
 
   Future<void> _delete(BuildContext context, Post post) async {
-    // FIXME
+    try {
+      final database = Provider.of<Database>(context, listen: false);
+      await database.deletePost(post);
+    } on PlatformException catch (e) {
+      PlatformExceptionAlertDialog(
+        title: 'Operation failed',
+        exception: e,
+      ).show(context);
+    }
   }
 
   @override

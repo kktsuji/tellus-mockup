@@ -6,6 +6,8 @@ import 'package:tellus_mockup/app/home/models/post.dart';
 import 'package:tellus_mockup/app/home/posts/post_list_card.dart';
 import 'package:tellus_mockup/services/database.dart';
 
+import 'edit_post_page.dart';
+
 class PostsPage extends StatelessWidget {
 
   Future<void> _delete(BuildContext context, Post post) async {
@@ -20,7 +22,13 @@ class PostsPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              var show = EditPostPage.show(
+                context,
+                database: Provider.of<Database>(context, listen: false),
+              );
+              return show;
+            },
           )
         ],
       ),
@@ -42,7 +50,11 @@ class PostsPage extends StatelessWidget {
             onDismissed: (direction) => _delete(context, post),
             child: PostListCard(
               post: post,
-              onTap: () => {},
+              onTap: () => EditPostPage.show(
+                context,
+                database: Provider.of<Database>(context, listen:false),
+                post: post,
+              ),
             ),
           )
         );

@@ -12,12 +12,14 @@ abstract class Database {
   Future<void> deleteJob(Job job);
   Stream<List<Job>> jobsStream();
   Stream<Job> jobStream({@required String jobId});
-  Stream<Post> postStream({@required String postId});
-  Stream<List<Post>> postsStream();
 
   Future<void> setEntry(Entry entry);
   Future<void> deleteEntry(Entry entry);
   Stream<List<Entry>> entriesStream({Job job});
+
+  Future<void> setPost(Post post);
+  Stream<Post> postStream({@required String postId});
+  Stream<List<Post>> postsStream();
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -60,18 +62,6 @@ class FirestoreDatabase implements Database {
       );
 
   @override
-  Stream<Post> postStream({@required String postId}) => _service.documentStream(
-        path: APIPath.post(uid, postId),
-        builder: (data, documentId) => Post.fromMap(data, documentId),
-      );
-
-  @override
-  Stream<List<Post>> postsStream() => _service.collectionStream(
-        path: APIPath.posts(uid),
-        builder: (data, documentId) => Post.fromMap(data, documentId),
-      );
-
-  @override
   Future<void> setEntry(Entry entry) async => await _service.setData(
         path: APIPath.entry(uid, entry.id),
         data: entry.toMap(),
@@ -91,4 +81,22 @@ class FirestoreDatabase implements Database {
         builder: (data, documentID) => Entry.fromMap(data, documentID),
         sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
       );
+
+  @override
+  Future<void> setPost(Post post) async => await _service.setData(
+      path: APIPath.post(uid, post.postId),
+      data: post.toMap(),
+  );
+
+  @override
+  Stream<Post> postStream({@required String postId}) => _service.documentStream(
+    path: APIPath.post(uid, postId),
+    builder: (data, documentId) => Post.fromMap(data, documentId),
+  );
+
+  @override
+  Stream<List<Post>> postsStream() => _service.collectionStream(
+    path: APIPath.posts(uid),
+    builder: (data, documentId) => Post.fromMap(data, documentId),
+  );
 }

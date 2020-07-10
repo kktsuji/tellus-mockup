@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:tellus_mockup/app/home/models/entry.dart';
 import 'package:tellus_mockup/app/home/models/job.dart';
+import 'package:tellus_mockup/app/home/models/post.dart';
 import 'package:tellus_mockup/services/api_path.dart';
 import 'package:tellus_mockup/services/firestore_service.dart';
 
@@ -11,6 +12,8 @@ abstract class Database {
   Future<void> deleteJob(Job job);
   Stream<List<Job>> jobsStream();
   Stream<Job> jobStream({@required String jobId});
+  Stream<Post> postStream({@required String postId});
+  Stream<List<Post>> postsStream();
 
   Future<void> setEntry(Entry entry);
   Future<void> deleteEntry(Entry entry);
@@ -54,6 +57,18 @@ class FirestoreDatabase implements Database {
   Stream<List<Job>> jobsStream() => _service.collectionStream(
         path: APIPath.jobs(uid),
         builder: (data, documentId) => Job.fromMap(data, documentId),
+      );
+
+  @override
+  Stream<Post> postStream({@required String postId}) => _service.documentStream(
+        path: APIPath.post(uid, postId),
+        builder: (data, documentId) => Post.fromMap(data, documentId),
+      );
+
+  @override
+  Stream<List<Post>> postsStream() => _service.collectionStream(
+        path: APIPath.posts(uid),
+        builder: (data, documentId) => Post.fromMap(data, documentId),
       );
 
   @override

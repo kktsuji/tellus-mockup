@@ -4,6 +4,7 @@ import 'package:tellus_mockup/app/home/account/account_page.dart';
 import 'package:tellus_mockup/app/home/cupertino_home_scaffold.dart';
 import 'package:tellus_mockup/app/home/entries/entries_page.dart';
 import 'package:tellus_mockup/app/home/jobs/jobs_page.dart';
+import 'package:tellus_mockup/app/home/posts/posts_page.dart';
 import 'package:tellus_mockup/app/home/tab_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     TabItem.jobs: GlobalKey<NavigatorState>(),
     TabItem.entries: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
+    TabItem.posts: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
       TabItem.jobs: (_) => JobsPage(),
       TabItem.entries: (context) => EntriesPage.create(context),
       TabItem.account: (_) => AccountPage(),
+      TabItem.posts: (_) => PostsPage(),
     };
   }
 

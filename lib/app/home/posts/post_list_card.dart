@@ -21,6 +21,7 @@ class PostListCard extends StatelessWidget {
     String path = _getImagePath(post.img);
     return Card(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Image.asset(path, fit: BoxFit.fitWidth),
           SizedBox(height: 10.0),
@@ -34,22 +35,28 @@ class PostListCard extends StatelessWidget {
                   ]
               ),
               SizedBox(width: 20.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(post.title, style: TextStyle(fontSize: 30)),
-                    SizedBox(height: 10.0),
-                    Text(post.description, style: TextStyle(fontSize: 15)),
-                    Text('Fee: ${post.fee} yen', style: TextStyle(fontSize: 15)),
-                    SizedBox(height: 10.0),
-                    RaisedButton(
-                      child: Text('Apply now'),
-                      color: Colors.orange,
-                      textColor: Colors.white,
-                      onPressed: onTap,
-                    ),
-                    SizedBox(height: 10.0),
-                  ],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(post.title, style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 10.0),
+                      Text(post.description,
+                        style: TextStyle(fontSize: 15),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,),
+                      SizedBox(height: 10.0),
+                      Text('Fee: ${post.fee} yen', style: TextStyle(fontSize: 15)),
+                      SizedBox(height: 10.0),
+                      RaisedButton(
+                        child: Text('Apply now'),
+                        color: Colors.orange,
+                        textColor: Colors.white,
+                        onPressed: onTap,
+                      ),
+                      SizedBox(height: 10.0),
+                    ],
+                ),
               ),
             ],
           ),

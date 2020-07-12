@@ -148,6 +148,8 @@ class _EditPostPageState extends State<EditPostPage> {
         initialValue: _description,
         //validator: (value) => value.isNotEmpty ? null : 'Description can\'t be empty',
         onSaved: (value) => _description = value,
+        maxLines: null,
+        keyboardType: TextInputType.multiline,
       ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Room URL'),

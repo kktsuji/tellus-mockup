@@ -58,12 +58,15 @@ class PostsPage extends StatelessWidget {
             background: Container(color: Colors.red),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) => _delete(context, post),
-            child: PostListCard(
-              post: post,
-              onTap: () => EditPostPage.show(
-                context,
-                database: Provider.of<Database>(context, listen:false),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: PostListCard(
                 post: post,
+                onTap: () => EditPostPage.show(
+                  context,
+                  database: Provider.of<Database>(context, listen:false),
+                  post: post,
+                ),
               ),
             ),
           )
@@ -71,7 +74,6 @@ class PostsPage extends StatelessWidget {
       }
     );
   }
-
 }
 
 

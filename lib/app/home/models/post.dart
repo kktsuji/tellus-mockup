@@ -14,7 +14,7 @@ class Post {
   final String speaker;
   final String description;
   final String url;
-  final int img;
+  final String img;
   final int fee;
 
   Map<String, dynamic> toMap() {
@@ -38,7 +38,7 @@ class Post {
     final String speaker = data['speaker'];
     final String description = data['description'];
     final String url = data['url'];
-    final int img = data['img'];
+    final String img = data['img'];
     final int fee = data['fee'];
     return Post(
       postId: postId,

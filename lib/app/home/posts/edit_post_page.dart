@@ -34,8 +34,9 @@ class _EditPostPageState extends State<EditPostPage> {
   String _speaker;
   String _description;
   String _url;
-  int _img;
+  String _img;
   int _fee;
+  List<String> _selectedItems = ['biz', 'game', 'green', 'sea', 'sky', 'town'];
 
   @override
   void initState() {
@@ -60,6 +61,8 @@ class _EditPostPageState extends State<EditPostPage> {
   }
 
   Future<void> _submit() async {
+    print(_img);
+
     if (_validateAndSaveForm()) {
       try {
         final postId = widget.post?.postId ?? documentIdFromCurrentDate();
@@ -152,11 +155,29 @@ class _EditPostPageState extends State<EditPostPage> {
         validator: (value) => value.isNotEmpty ? null : 'URL can\'t be empty',
         onSaved: (value) => _url = value,
       ),
-      TextFormField(
-        decoration: InputDecoration(labelText: 'Image'),
-        initialValue: _img != null ? '$_img' : null,
-        validator: (value) => value.isNotEmpty ? null : 'Image can\'t be empty',
-        onSaved: (value) => _img = int.tryParse(value) ?? 0,
+      SizedBox(height: 24.0),
+      Row(
+        children: <Widget>[
+          Text(
+            'Thum image      ',
+            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+          ),
+          DropdownButton<String> (
+            value: _img,
+            onChanged: (String string) => setState(() => _img = string),
+            selectedItemBuilder: (BuildContext context) {
+              return _selectedItems.map<Widget>((String item) {
+                return Text(item);
+              }).toList();
+            },
+            items: _selectedItems.map((String item) {
+              return DropdownMenuItem<String>(
+                child: Text('$item'),
+                value: item,
+              );
+            }).toList(),
+          ),
+        ],
       ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Fee'),
